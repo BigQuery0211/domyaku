@@ -251,6 +251,16 @@
                             </div>
                             <small class="text-muted">会社名を入力すると候補が表示されます</small>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="role" class="form-label">権限 *</label>
+                            <select id="role" name="role" class="form-control" required>
+                                <option value="">権限を選択してください</option>
+                                <option value="admin">管理者</option>
+                                <option value="user">一般ユーザー</option>
+                            </select>
+                            <small class="text-muted">管理者：全ての機能にアクセス可能、一般ユーザー：セミナー参加と回答機能のみ</small>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -307,63 +317,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
                     <button type="submit" form="messageForm" class="btn btn-primary">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                <div class="card-header">
-                    <h3 class="card-title">招待履歴</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>氏名</th>
-                                <th>メールアドレス</th>
-                                <th>所属会社</th>
-                                <th>権限</th>
-                                <th>招待日時</th>
-                                <th>ステータス</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="invitationHistory">
-                            <tr>
-                                <td>田中 一郎</td>
-                                <td>participant1@example.com</td>
-                                <td>株式会社サンプル</td>
-                                <td>参加者</td>
-                                <td>2025-08-30 10:30</td>
-                                <td><span class="badge badge-success">登録済み</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>佐藤 花子</td>
-                                <td>participant2@example.com</td>
-                                <td>テスト株式会社</td>
-                                <td>参加者</td>
-                                <td>2025-08-31 09:15</td>
-                                <td><span class="badge badge-warning">招待中</span></td>
-                                <td>
-                                    <button class="btn btn-secondary btn-sm" onclick="resendInvitation('participant2@example.com')">再送信</button>
-                                    <button class="btn btn-danger btn-sm" onclick="cancelInvitation('participant2@example.com')">取消</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>鈴木 次郎</td>
-                                <td>instructor2@example.com</td>
-                                <td>デモ企業</td>
-                                <td>講師</td>
-                                <td>2025-08-31 14:20</td>
-                                <td><span class="badge badge-warning">招待中</span></td>
-                                <td>
-                                    <button class="btn btn-secondary btn-sm" onclick="resendInvitation('instructor2@example.com')">再送信</button>
-                                    <button class="btn btn-danger btn-sm" onclick="cancelInvitation('instructor2@example.com')">取消</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -562,7 +515,7 @@
                     const fullName = `${firstName} ${lastName}`;
                     const companyName = companySearch.value;
                     const role = document.getElementById('role').value;
-                    const roleText = role === 'instructor' ? '講師' : '参加者';
+                    const roleText = role === 'admin' ? '管理者' : '一般ユーザー';
                     
                     // テーブルに新しい行を追加
                     const tbody = document.getElementById('invitationHistory');
