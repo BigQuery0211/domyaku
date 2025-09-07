@@ -387,9 +387,30 @@
     </div>
     
     <style>
+        /* CSS変数定義 */
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --medium-gray: #666666;
+            --light-gray: #999999;
+            --border-color: #e0e0e0;
+            --white: #ffffff;
+            --black: #000000;
+            --lightest-gray: #f5f5f5;
+        }
+        
         .breadcrumb {
             background-color: transparent;
             padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb-item {
+            color: var(--medium-gray);
         }
         
         .breadcrumb-item a {
@@ -397,11 +418,23 @@
             text-decoration: none;
         }
         
+        .breadcrumb-item a:hover {
+            color: var(--black);
+            text-decoration: underline;
+        }
+        
         .breadcrumb-item.active {
             color: var(--black);
         }
         
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "/";
+            margin: 0 8px;
+            color: var(--medium-gray);
+        }
+        
         .status-badge {
+            display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
@@ -444,11 +477,12 @@
             background-color: #e9ecef;
             border-radius: 8px;
             overflow: hidden;
+            position: relative;
         }
         
         .progress-fill {
             height: 100%;
-            background-color: var(--success-color);
+            background-color: #28a745;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -465,44 +499,146 @@
         .stat-card {
             text-align: center;
             padding: 20px;
-            border: 1px solid var(--border-color);
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            background-color: var(--white);
+            background-color: #ffffff;
+            margin-bottom: 20px;
         }
         
         .stat-number {
             font-size: 2.5em;
             font-weight: bold;
-            color: var(--primary-color);
+            color: #000000;
             margin-bottom: 10px;
         }
         
         .stat-label {
-            color: var(--medium-gray);
+            color: #666666;
             font-size: 14px;
         }
         
         .pagination {
             margin: 0;
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .pagination .page-item {
+            margin-right: 5px;
+        }
+        
+        .pagination .page-link {
+            display: block;
+            padding: 8px 12px;
+            color: #000000;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background-color: #ffffff;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: #000000;
+            border-color: #000000;
+            color: #ffffff;
+        }
+        
+        .pagination .page-link:hover {
+            color: #000000;
+            background-color: #f5f5f5;
+            border-color: #e0e0e0;
+        }
+        
+        .pagination .page-item.disabled .page-link {
+            color: #666666;
+            background-color: #ffffff;
+            border-color: #e0e0e0;
+            cursor: not-allowed;
         }
         
         .justify-center {
             justify-content: center;
         }
         
-        .page-link {
-            color: var(--black);
-            border-color: var(--border-color);
+        /* 補助スタイル */
+        .fw-bold {
+            font-weight: bold;
         }
         
-        .page-item.active .page-link {
-            background-color: var(--black);
-            border-color: var(--black);
+        .text-right {
+            text-align: right;
         }
         
-        .page-link:hover {
-            color: var(--black);
-            background-color: var(--lightest-gray);
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-primary {
+            color: #000000 !important;
+        }
+        
+        .text-success {
+            color: #28a745 !important;
+        }
+        
+        .text-warning {
+            color: #ffc107 !important;
+        }
+        
+        .text-danger {
+            color: #dc3545 !important;
+        }
+        
+        .text-info {
+            color: #17a2b8 !important;
+        }
+        
+        .small {
+            font-size: 0.875em;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+        
+        .col-md-3, .col-md-6 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        .col-md-3 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+        
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .col-md-3, .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .d-flex {
+                flex-direction: column;
+            }
+            
+            .text-right {
+                text-align: left;
+                margin-top: 10px;
+            }
+            
+            .stat-number {
+                font-size: 2em;
+            }
         }
     </style>
     
