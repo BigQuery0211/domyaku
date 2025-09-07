@@ -45,47 +45,82 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="fw-bold">開催情報</h6>
-                            <ul class="list-unstyled small mb-15">
-                                <li><strong>📅 開催期間:</strong> 2025-08-01 ～ 2025-09-30</li>
-                                <li><strong>🕒 開催時間:</strong> 10:00 ～ 17:00</li>
-                                <li><strong>📍 開催場所:</strong> 本社会議室A・オンライン併用</li>
-                                <li><strong>👥 参加者数:</strong> 25名 / 30名（定員）</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="fw-bold">進捗状況</h6>
-                            <div class="progress-info mb-15">
-                                <div class="d-flex justify-between mb-5">
-                                    <span class="small">全体進捗</span>
-                                    <span class="small">68% 完了</span>
+                    <div class="seminar-detail-grid">
+                        <!-- 開催情報 -->
+                        <div class="info-section">
+                            <h6 class="section-title">📋 開催情報</h6>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-icon">📅</div>
+                                    <div class="info-content">
+                                        <div class="info-label">開催期間</div>
+                                        <div class="info-value">2025-08-01 ～ 2025-09-30</div>
+                                    </div>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 68%;">68%</div>
+                                <div class="info-item">
+                                    <div class="info-icon">🕒</div>
+                                    <div class="info-content">
+                                        <div class="info-label">開催時間</div>
+                                        <div class="info-value">10:00 ～ 17:00</div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-icon">📍</div>
+                                    <div class="info-content">
+                                        <div class="info-label">開催場所</div>
+                                        <div class="info-value">本社会議室A・オンライン併用</div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-icon">👥</div>
+                                    <div class="info-content">
+                                        <div class="info-label">参加者数</div>
+                                        <div class="info-value">25名 / 30名（定員）</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex gap-20">
-                                <div class="text-center">
-                                    <div class="fw-bold text-primary">17</div>
-                                    <small class="text-muted">回答済み</small>
+                        </div>
+                        
+                        <!-- 進捗状況 -->
+                        <div class="progress-section">
+                            <h6 class="section-title">📊 進捗状況</h6>
+                            <div class="progress-overview">
+                                <div class="progress-main">
+                                    <div class="progress-header">
+                                        <span class="progress-label">全体進捗</span>
+                                        <span class="progress-percentage">68% 完了</span>
+                                    </div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 68%;"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-warning">6</div>
-                                    <small class="text-muted">未回答</small>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-danger">2</div>
-                                    <small class="text-muted">期限切れ</small>
+                                
+                                <div class="progress-stats">
+                                    <div class="stat-item stat-completed">
+                                        <div class="stat-number">17</div>
+                                        <div class="stat-label">回答済み</div>
+                                    </div>
+                                    <div class="stat-item stat-pending">
+                                        <div class="stat-number">6</div>
+                                        <div class="stat-label">未回答</div>
+                                    </div>
+                                    <div class="stat-item stat-overdue">
+                                        <div class="stat-number">2</div>
+                                        <div class="stat-label">期限切れ</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div>
-                        <h6 class="fw-bold">セミナー概要</h6>
-                        <p class="mb-0">新入社員を対象とした基礎研修プログラムです。ビジネスマナー、会社の理念・文化、基本的なスキル習得を目的としています。参加者は段階的にワークシートに取り組み、理解度を確認しながら進めていきます。</p>
+                    
+                    <!-- セミナー概要 -->
+                    <div class="description-section">
+                        <h6 class="section-title">📝 セミナー概要</h6>
+                        <div class="description-content">
+                            <p>新入社員を対象とした基礎研修プログラムです。ビジネスマナー、会社の理念・文化、基本的なスキル習得を目的としています。参加者は段階的にワークシートに取り組み、理解度を確認しながら進めていきます。</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -626,6 +661,255 @@
         
         .small {
             font-size: 0.875em;
+        }
+        
+        /* セミナー詳細のレイアウト */
+        .seminar-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        /* 開催情報セクション */
+        .info-section {
+            background: var(--lightest-gray);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .info-grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            color: var(--black);
+            font-weight: 600;
+        }
+        
+        /* 進捗状況セクション */
+        .progress-section {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .progress-overview {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .progress-main {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .progress-label {
+            font-size: 0.95rem;
+            color: var(--medium-gray);
+            font-weight: 500;
+        }
+        
+        .progress-percentage {
+            font-size: 1.1rem;
+            color: var(--success-color);
+            font-weight: 700;
+        }
+        
+        .progress-bar-wrapper {
+            position: relative;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #e9ecef;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: inherit;
+            transition: width 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 16px 12px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--medium-gray);
+            font-weight: 500;
+        }
+        
+        .stat-completed .stat-number {
+            color: var(--success-color);
+        }
+        
+        .stat-pending .stat-number {
+            color: var(--warning-color);
+        }
+        
+        .stat-overdue .stat-number {
+            color: var(--danger-color);
+        }
+        
+        /* セミナー概要セクション */
+        .description-section {
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .description-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .description-content p {
+            margin: 0;
+            line-height: 1.6;
+            color: var(--secondary-color);
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .seminar-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .info-section,
+            .progress-section,
+            .description-section {
+                padding: 20px;
+            }
+            
+            .progress-stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stat-item {
+                padding: 12px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
         }
         
         .row {
