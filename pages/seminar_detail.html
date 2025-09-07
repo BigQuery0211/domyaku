@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セミナー詳細 - セミナーワークシート管理システム</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/monochrome.css">
+    <link rel="stylesheet" href="../css/debug.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">domyaku</div>
+                <div class="user-menu">
+                    <span>講師: 田中太郎</span>
+                    <a href="login.html" class="btn btn-secondary btn-sm">ログアウト</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <!-- パンくずリスト -->
+            <nav aria-label="breadcrumb" class="mb-20">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="instructor_dashboard.html">ダッシュボード</a></li>
+                    <li class="breadcrumb-item"><a href="seminar_list.html">セミナー一覧</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">新人研修プログラム 2025</li>
+                </ol>
+            </nav>
+
+            <!-- セミナー情報 -->
+            <div class="card mb-20">
+                <div class="card-header">
+                    <div class="d-flex justify-between align-center">
+                        <div>
+                            <h1 class="card-title">新人研修プログラム 2025</h1>
+                            <p class="text-muted mb-0">ID: SEM-2025-001</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="status-badge status-active">進行中</span>
+                            <div class="mt-10">
+                                <a href="seminar_create.html?id=SEM-2025-001" class="btn btn-secondary btn-sm">編集</a>
+                                <button class="btn btn-primary btn-sm" onclick="duplicateSeminar()">複製</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold">開催情報</h6>
+                            <ul class="list-unstyled small mb-15">
+                                <li><strong>📅 開催期間:</strong> 2025-08-01 ～ 2025-09-30</li>
+                                <li><strong>🕒 開催時間:</strong> 10:00 ～ 17:00</li>
+                                <li><strong>📍 開催場所:</strong> 本社会議室A・オンライン併用</li>
+                                <li><strong>👥 参加者数:</strong> 25名 / 30名（定員）</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold">進捗状況</h6>
+                            <div class="progress-info mb-15">
+                                <div class="d-flex justify-between mb-5">
+                                    <span class="small">全体進捗</span>
+                                    <span class="small">68% 完了</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 68%;">68%</div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-20">
+                                <div class="text-center">
+                                    <div class="fw-bold text-primary">17</div>
+                                    <small class="text-muted">回答済み</small>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-warning">6</div>
+                                    <small class="text-muted">未回答</small>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-danger">2</div>
+                                    <small class="text-muted">期限切れ</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <h6 class="fw-bold">セミナー概要</h6>
+                        <p class="mb-0">新入社員を対象とした基礎研修プログラムです。ビジネスマナー、会社の理念・文化、基本的なスキル習得を目的としています。参加者は段階的にワークシートに取り組み、理解度を確認しながら進めていきます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ワークシート一覧 -->
+            <div class="card mb-20">
+                <div class="card-header">
+                    <div class="d-flex justify-between align-center">
+                        <h2 class="card-title">📝 ワークシート一覧</h2>
+                        <div>
+                            <button class="btn btn-secondary btn-sm" onclick="shareAllWorksheets()">全て共有</button>
+                            <a href="worksheet_editor.html" class="btn btn-primary btn-sm">新規作成</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ワークシート名</th>
+                                <th>質問数</th>
+                                <th>回答状況</th>
+                                <th>共有状況</th>
+                                <th>期限</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>事前アンケート</strong>
+                                    <br><small class="text-muted">参加前の基礎知識確認</small>
+                                </td>
+                                <td>5問</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 100%;">25/25</div>
+                                    </div>
+                                    <small class="text-success">完了</small>
+                                </td>
+                                <td><span class="status-badge status-shared">共有済み</span></td>
+                                <td>2025-08-05</td>
+                                <td>
+                                    <a href="worksheet_editor.html?id=WS001" class="btn btn-secondary btn-sm">編集</a>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewResponses('WS001')">回答確認</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>理解度チェック</strong>
+                                    <br><small class="text-muted">第1回講義の理解度確認</small>
+                                </td>
+                                <td>8問</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 80%;">20/25</div>
+                                    </div>
+                                    <small class="text-warning">20名回答済み</small>
+                                </td>
+                                <td><span class="status-badge status-shared">共有済み</span></td>
+                                <td>2025-08-15</td>
+                                <td>
+                                    <a href="worksheet_editor.html?id=WS002" class="btn btn-secondary btn-sm">編集</a>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewResponses('WS002')">回答確認</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>研修振り返りシート</strong>
+                                    <br><small class="text-muted">研修効果の測定</small>
+                                </td>
+                                <td>8問</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 68%;">17/25</div>
+                                    </div>
+                                    <small class="text-info">17名回答済み</small>
+                                </td>
+                                <td><span class="status-badge status-shared">共有済み</span></td>
+                                <td>2025-09-05</td>
+                                <td>
+                                    <a href="worksheet_editor.html?id=WS003" class="btn btn-secondary btn-sm">編集</a>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewResponses('WS003')">回答確認</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>最終評価シート</strong>
+                                    <br><small class="text-muted">総合的な学習効果の評価</small>
+                                </td>
+                                <td>12問</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 0%;">0/25</div>
+                                    </div>
+                                    <small class="text-muted">未開始</small>
+                                </td>
+                                <td><span class="status-badge status-draft">下書き</span></td>
+                                <td>2025-09-30</td>
+                                <td>
+                                    <a href="worksheet_editor.html?id=WS004" class="btn btn-secondary btn-sm">編集</a>
+                                    <button class="btn btn-primary btn-sm" onclick="shareWorksheet('WS004')">共有</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 参加者一覧 -->
+            <div class="card mb-20">
+                <div class="card-header">
+                    <div class="d-flex justify-between align-center">
+                        <h2 class="card-title">👥 参加者一覧</h2>
+                        <div>
+                            <button class="btn btn-secondary btn-sm" onclick="exportParticipants()">エクスポート</button>
+                            <button class="btn btn-primary btn-sm" onclick="addParticipant()">参加者追加</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- 参加者フィルター -->
+                    <div class="row mb-20">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="参加者名で検索..." id="participantSearch">
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control" id="statusFilter">
+                                <option value="">全ての状況</option>
+                                <option value="active">参加中</option>
+                                <option value="pending">回答待ち</option>
+                                <option value="completed">完了</option>
+                                <option value="overdue">期限切れ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>参加者名</th>
+                                <th>メール</th>
+                                <th>部署</th>
+                                <th>進捗率</th>
+                                <th>最新回答</th>
+                                <th>状況</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>佐藤花子</strong>
+                                    <br><small class="text-muted">ID: P001</small>
+                                </td>
+                                <td>hanako.sato@company.com</td>
+                                <td>営業部</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 75%;">75%</div>
+                                    </div>
+                                </td>
+                                <td>2025-09-03 14:30</td>
+                                <td><span class="status-badge status-active">参加中</span></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P001')">詳細</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="sendReminder('P001')">催促</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>田中次郎</strong>
+                                    <br><small class="text-muted">ID: P002</small>
+                                </td>
+                                <td>jiro.tanaka@company.com</td>
+                                <td>技術部</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 100%;">100%</div>
+                                    </div>
+                                </td>
+                                <td>2025-09-04 16:15</td>
+                                <td><span class="status-badge status-completed">完了</span></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P002')">詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>山田三郎</strong>
+                                    <br><small class="text-muted">ID: P003</small>
+                                </td>
+                                <td>saburo.yamada@company.com</td>
+                                <td>人事部</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 33%;">33%</div>
+                                    </div>
+                                </td>
+                                <td>2025-08-30 09:45</td>
+                                <td><span class="status-badge status-overdue">期限切れ</span></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P003')">詳細</button>
+                                    <button class="btn btn-warning btn-sm" onclick="sendReminder('P003')">催促</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>鈴木美咲</strong>
+                                    <br><small class="text-muted">ID: P004</small>
+                                </td>
+                                <td>misaki.suzuki@company.com</td>
+                                <td>マーケティング部</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 50%;">50%</div>
+                                    </div>
+                                </td>
+                                <td>2025-09-02 11:20</td>
+                                <td><span class="status-badge status-pending">回答待ち</span></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P004')">詳細</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="sendReminder('P004')">催促</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- ページネーション -->
+                    <nav aria-label="参加者一覧ページネーション" class="mt-20">
+                        <ul class="pagination justify-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">前へ</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">次へ</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- 統計情報 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📊 統計情報</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number">25</div>
+                                <div class="stat-label">参加者数</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number">4</div>
+                                <div class="stat-label">ワークシート数</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number">68%</div>
+                                <div class="stat-label">平均進捗率</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number">85%</div>
+                                <div class="stat-label">回答率</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2025 セミナーワークシート管理システム. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <style>
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--medium-gray);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--black);
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-overdue {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-draft {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .status-shared {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: 500;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-info {
+            margin-bottom: 15px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--white);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
+        
+        .pagination {
+            margin: 0;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .page-link {
+            color: var(--black);
+            border-color: var(--border-color);
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--black);
+            border-color: var(--black);
+        }
+        
+        .page-link:hover {
+            color: var(--black);
+            background-color: var(--lightest-gray);
+        }
+    </style>
+    
+    <script src="../js/common.js"></script>
+    <script>
+        // ワークシート共有
+        function shareWorksheet(worksheetId) {
+            if (confirm('このワークシートを参加者に共有しますか？\n共有と同時にメール通知が送信されます。')) {
+                alert('ワークシート「最終評価シート」を共有しました。\n参加者25名にメール通知を送信しました。');
+                // 実際の処理はここに実装
+                location.reload();
+            }
+        }
+        
+        // 全ワークシート共有
+        function shareAllWorksheets() {
+            if (confirm('未共有のワークシートを全て共有しますか？')) {
+                alert('1件のワークシートを共有しました。');
+                location.reload();
+            }
+        }
+        
+        // 回答確認
+        function viewResponses(worksheetId) {
+            window.open(`worksheet_responses.html?id=${worksheetId}`, '_blank');
+        }
+        
+        // 参加者進捗詳細
+        function viewProgress(participantId) {
+            window.open(`participant_progress.html?id=${participantId}`, '_blank');
+        }
+        
+        // リマインダー送信
+        function sendReminder(participantId) {
+            if (confirm('この参加者にリマインダーメールを送信しますか？')) {
+                alert('リマインダーメールを送信しました。');
+            }
+        }
+        
+        // セミナー複製
+        function duplicateSeminar() {
+            if (confirm('このセミナーを複製しますか？\nワークシートと設定がコピーされます。')) {
+                alert('セミナーを複製しました。\n新しいセミナー「新人研修プログラム 2025 (コピー)」を作成しました。');
+            }
+        }
+        
+        // 参加者追加
+        function addParticipant() {
+            window.open('user_invitation.html?seminar=SEM-2025-001', '_blank');
+        }
+        
+        // 参加者エクスポート
+        function exportParticipants() {
+            alert('参加者一覧をCSVファイルとしてダウンロードしました。');
+        }
+        
+        // 検索・フィルタ機能
+        document.getElementById('participantSearch').addEventListener('input', function() {
+            // 実際の検索処理はここに実装
+            console.log('検索:', this.value);
+        });
+        
+        document.getElementById('statusFilter').addEventListener('change', function() {
+            // 実際のフィルタ処理はここに実装
+            console.log('フィルタ:', this.value);
+        });
+    </script>
+</body>
+</html>
