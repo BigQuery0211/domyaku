@@ -535,8 +535,9 @@ a:not(.nav-link):not(.btn):hover {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 0;
+    padding: 15px 0;
     margin: 0;
+    gap: 0;
 }
 
 .scale-option {
@@ -546,20 +547,23 @@ a:not(.nav-link):not(.btn):hover {
     cursor: pointer;
     flex: 1;
     max-width: none;
+    text-align: center;
+    min-width: 0;
 }
 
 .scale-option input[type="radio"] {
-    margin: 0 0 5px 0;
-    width: 18px;
-    height: 18px;
+    margin: 0 0 8px 0;
+    width: 20px;
+    height: 20px;
 }
 
 .scale-number {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--medium-gray);
     -webkit-user-select: none;
     user-select: none;
+    line-height: 1;
 }
 
 .scale-option:hover .scale-number {
@@ -582,26 +586,63 @@ a:not(.nav-link):not(.btn):hover {
     }
     
     .scale-options {
-        padding: 8px 0;
+        padding: 12px 0;
         justify-content: space-between;
+        gap: 0;
     }
     
     .scale-option {
         flex: 1;
+        min-width: 0;
     }
     
     .scale-option input[type="radio"] {
         width: 16px;
         height: 16px;
-        margin: 0 0 3px 0;
+        margin: 0 0 6px 0;
     }
     
     .scale-number {
-        font-size: 11px;
+        font-size: 10px;
+        line-height: 1;
     }
     
     .scale-labels {
-        font-size: 12px;
+        font-size: 11px;
         margin-bottom: 8px;
+    }
+    
+    .scale-container {
+        margin: 15px 0;
+    }
+}
+
+/* 極小画面（スマートフォン）での調整 */
+@media (max-width: 480px) {
+    .scale-options {
+        padding: 10px 0;
+    }
+    
+    .scale-option input[type="radio"] {
+        width: 14px;
+        height: 14px;
+        margin: 0 0 4px 0;
+    }
+    
+    .scale-number {
+        font-size: 9px;
+    }
+    
+    .scale-labels {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+    
+    .scale-labels .scale-label-left,
+    .scale-labels .scale-label-right {
+        max-width: 40%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
