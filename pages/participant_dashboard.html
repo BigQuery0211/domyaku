@@ -32,7 +32,7 @@
                     <p>以下のワークシートにまだ回答していません。</p>
                 </div>
                 <div class="card-body">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+                    <div class="worksheets-grid">
                         <div class="card worksheet-pending">
                             <div class="card-body">
                                 <div class="d-flex justify-between align-center mb-15">
@@ -200,6 +200,34 @@
     </div>
     
     <style>
+        .worksheets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .worksheets-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .worksheets-grid {
+                gap: 10px;
+            }
+            
+            .card-body {
+                padding: 15px;
+            }
+            
+            .priority-badge {
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+        }
+        
         .worksheet-pending {
             border-left: 4px solid var(--warning-color);
         }
