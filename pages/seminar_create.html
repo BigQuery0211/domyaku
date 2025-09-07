@@ -454,6 +454,12 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="venue" class="form-label">開催場所 *</label>
+                        <input type="text" id="venue" name="venue" class="form-control" 
+                               placeholder="例: 本社会議室A・オンライン併用" required>
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="seminar_description" class="form-label">セミナー概要</label>
                         <textarea id="seminar_description" name="seminar_description" class="form-control" 
                                   rows="3" placeholder="セミナーの内容や目的を入力してください"></textarea>
@@ -986,6 +992,7 @@
                 endDate: document.getElementById('end_date').value,
                 startTime: document.getElementById('start_time').value,
                 endTime: document.getElementById('end_time').value,
+                venue: document.getElementById('venue').value,
                 description: document.getElementById('seminar_description').value,
                 companies: selectedCompanies.map(company => company.id.toString()),
                 worksheets: addedWorksheets,
