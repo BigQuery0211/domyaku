@@ -24,6 +24,14 @@
     
     <div class="container">
         <div class="main-content">
+            <nav class="nav">
+                <a href="instructor_dashboard.html" class="nav-link">ダッシュボード</a>
+                <a href="worksheet_list.html" class="nav-link">ワークシート</a>
+                <a href="seminar_list.html" class="nav-link active">セミナー</a>
+                <a href="user_invitation.html" class="nav-link">受講者</a>
+                <a href="company_registration.html" class="nav-link">会社</a>
+            </nav>
+
             <!-- パンくずリスト -->
             <nav aria-label="breadcrumb" class="mb-20">
                 <ol class="breadcrumb">
@@ -44,8 +52,15 @@
                         <div class="text-right">
                             <span class="status-badge status-active">進行中</span>
                             <div class="mt-10">
-                                <a href="seminar_create.html?id=SEM-2025-001" class="btn btn-secondary btn-sm">編集</a>
-                                <button class="btn btn-primary btn-sm" onclick="duplicateSeminar()">複製</button>
+                                <button class="btn btn-secondary btn-sm" onclick="showEditRestrictionModal()" title="進行中のセミナーは編集できません">
+                                    <i class="fas fa-edit"></i> 編集
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="duplicateSeminar()">
+                                    <i class="fas fa-copy"></i> 複製
+                                </button>
+                                <button class="btn btn-outline btn-sm" onclick="exportSeminarData()">
+                                    <i class="fas fa-download"></i> エクスポート
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -342,41 +357,6 @@
                     </nav>
                 </div>
             </div>
-
-            <!-- 統計情報 -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">📊 統計情報</h2>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-number">25</div>
-                                <div class="stat-label">参加者数</div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-number">4</div>
-                                <div class="stat-label">ワークシート数</div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-number">68%</div>
-                                <div class="stat-label">平均進捗率</div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-number">85%</div>
-                                <div class="stat-label">回答率</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     
@@ -561,6 +541,95 @@
             justify-content: center;
         }
         
+        /* モーダル */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-dialog {
+            margin: 0;
+            max-width: 90%;
+            width: 600px;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .btn-close:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .checkbox-group {
+            margin-top: 10px;
+        }
+        
+        .checkbox-label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
         /* 補助スタイル */
         .fw-bold {
             font-weight: bold;
@@ -683,6 +752,109 @@
             if (confirm('このセミナーを複製しますか？\nワークシートと設定がコピーされます。')) {
                 alert('セミナーを複製しました。\n新しいセミナー「新人研修プログラム 2025 (コピー)」を作成しました。');
             }
+        }
+        
+        // 編集制限モーダル表示
+        function showEditRestrictionModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.innerHTML = `
+                <div class="modal-dialog" style="max-width: 500px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">編集できません</h5>
+                            <button type="button" class="btn-close" onclick="this.closest('.modal').remove()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center mb-20">
+                                <i class="fas fa-lock text-warning" style="font-size: 48px;"></i>
+                            </div>
+                            <p><strong>進行中のセミナーは編集できません。</strong></p>
+                            <p>セミナーが進行中の間は、参加者への影響を避けるため編集機能は制限されています。</p>
+                            <hr>
+                            <p class="mb-0"><strong>編集したい場合は:</strong></p>
+                            <ul class="mb-0">
+                                <li>セミナーを「一時停止」にしてから編集</li>
+                                <li>または「複製」して新しいセミナーを作成</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="duplicateSeminar(); this.closest('.modal').remove();">
+                                <i class="fas fa-copy"></i> 複製して編集
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="this.closest('.modal').remove()">閉じる</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // モーダル外クリックで閉じる
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // セミナー複製
+        function duplicateSeminar() {
+            if (confirm('このセミナーを複製して新しいセミナーを作成しますか？')) {
+                // 実際のシステムでは複製処理を実行
+                alert('セミナーが複製されました。編集画面に移動します。');
+                window.location.href = 'seminar_create.html?duplicate=SEM-2025-001';
+            }
+        }
+        
+        // データエクスポート
+        function exportSeminarData() {
+            const exportOptions = document.createElement('div');
+            exportOptions.className = 'modal show';
+            exportOptions.innerHTML = `
+                <div class="modal-dialog" style="max-width: 400px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">データをエクスポート</h5>
+                            <button type="button" class="btn-close" onclick="this.closest('.modal').remove()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-label">エクスポート内容を選択:</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked> 参加者一覧
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked> ワークシート回答
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox"> 統計データ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="executeExport(); this.closest('.modal').remove();">
+                                <i class="fas fa-download"></i> エクスポート実行
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="this.closest('.modal').remove()">キャンセル</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(exportOptions);
+            
+            // モーダル外クリックで閉じる
+            exportOptions.addEventListener('click', function(e) {
+                if (e.target === exportOptions) {
+                    exportOptions.remove();
+                }
+            });
+        }
+        
+        // エクスポート実行
+        function executeExport() {
+            alert('選択されたデータをCSVファイルとしてダウンロードしました。');
         }
         
         // 参加者追加
