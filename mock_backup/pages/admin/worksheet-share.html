@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワークシート共有 - domyaku</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-chart-line"></i>
+                domyaku
+            </a>
+            
+            <div class="navbar-nav ms-auto">
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                        <div class="user-avatar me-2">田</div>
+                        <span>田中 管理者</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>プロフィール</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>設定</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../auth/login.html"><i class="fas fa-sign-out-alt me-2"></i>ログアウト</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <div class="sidebar-content">
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>ダッシュボード</span>
+                        </a>
+                        <a class="nav-link" href="seminars.html">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>セミナー管理</span>
+                        </a>
+                        <a class="nav-link active" href="worksheets.html">
+                            <i class="fas fa-file-alt"></i>
+                            <span>ワークシート</span>
+                        </a>
+                        <a class="nav-link" href="user-management.html">
+                            <i class="fas fa-users"></i>
+                            <span>ユーザー管理</span>
+                        </a>
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>レポート</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">
+                        <i class="fas fa-share me-2"></i>
+                        ワークシート共有
+                    </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="dashboard.html">ダッシュボード</a></li>
+                            <li class="breadcrumb-item"><a href="worksheets.html">ワークシート</a></li>
+                            <li class="breadcrumb-item active">共有設定</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <!-- ワークシート情報 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-file-alt me-2"></i>
+                                    ワークシート情報
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h5 class="fw-bold">プログラミング基礎ワークシート</h5>
+                                        <h6 class="text-muted mb-2">〜基本構文から実践まで〜</h6>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-tag me-1"></i>
+                                            種類: 事前課題
+                                        </p>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-clock me-1"></i>
+                                            制限時間: 30分
+                                        </p>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-calendar-alt me-1"></i>
+                                            提出期限: 2025年9月14日 23:59
+                                        </p>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-graduation-cap me-1"></i>
+                                            関連セミナー: プログラミング基礎セミナー
+                                        </p>
+                                        <p class="text-muted mb-0">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            作成日: 2025年8月25日
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-end">
+                                            <div class="stat-number">5</div>
+                                            <div class="stat-label">質問数</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 共有タイプ選択 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-cogs me-2"></i>
+                                    共有タイプ選択
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card h-100 share-type-card" onclick="selectShareType('pre')">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-clock fa-3x text-warning mb-3"></i>
+                                                <h5>事前課題</h5>
+                                                <p class="text-muted">セミナー開催前に配布</p>
+                                                <div class="form-check mt-3">
+                                                    <input class="form-check-input" type="radio" name="shareType" id="shareTypePre" value="pre" checked>
+                                                    <label class="form-check-label" for="shareTypePre">選択</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card h-100 share-type-card" onclick="selectShareType('during')">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-play fa-3x text-success mb-3"></i>
+                                                <h5>セミナー中</h5>
+                                                <p class="text-muted">セミナー進行中に配布</p>
+                                                <div class="form-check mt-3">
+                                                    <input class="form-check-input" type="radio" name="shareType" id="shareTypeDuring" value="during">
+                                                    <label class="form-check-label" for="shareTypeDuring">選択</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card h-100 share-type-card" onclick="selectShareType('post')">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-flag-checkered fa-3x text-info mb-3"></i>
+                                                <h5>事後課題</h5>
+                                                <p class="text-muted">セミナー終了後に配布</p>
+                                                <div class="form-check mt-3">
+                                                    <input class="form-check-input" type="radio" name="shareType" id="shareTypePost" value="post">
+                                                    <label class="form-check-label" for="shareTypePost">選択</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 共有設定 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-share-alt me-2"></i>
+                                    共有設定
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- 公開日時設定 -->
+                                <div class="mb-4">
+                                    <h6 class="fw-bold mb-3">公開スケジュール</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">公開開始日時</label>
+                                            <input type="datetime-local" class="form-control" value="2025-09-10T09:00">
+                                            <div class="form-text">参加者がワークシートにアクセス可能になる日時</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">公開終了日時（任意）</label>
+                                            <input type="datetime-local" class="form-control" value="2025-09-20T18:00">
+                                            <div class="form-text">アクセスを制限したい場合に設定</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 回答期限設定 -->
+                                <div class="mb-4">
+                                    <h6 class="fw-bold mb-3">回答期限</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">回答期限日時</label>
+                                            <input type="datetime-local" class="form-control" value="2025-09-14T23:59">
+                                            <div class="form-text">参加者の回答提出期限</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check mt-4">
+                                                <input class="form-check-input" type="checkbox" id="allowLateSubmission" checked>
+                                                <label class="form-check-label" for="allowLateSubmission">
+                                                    期限後の回答も受け付ける
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="remindBeforeDeadline" checked>
+                                                <label class="form-check-label" for="remindBeforeDeadline">
+                                                    期限前にリマインダーを送信
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 通知設定 -->
+                                <div class="mb-4">
+                                    <h6 class="fw-bold mb-3">メール通知</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="notifyOnShare" checked>
+                                                <label class="form-check-label" for="notifyOnShare">
+                                                    共有時に参加者にメール通知
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="notifyOnSubmission">
+                                                <label class="form-check-label" for="notifyOnSubmission">
+                                                    回答提出時に管理者にメール通知
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">カスタムメッセージ（任意）</label>
+                                            <textarea class="form-control" rows="3" placeholder="参加者への追加メッセージがあれば入力してください...">いつもお疲れ様です。
+セミナーの事前課題をお送りします。
+ご不明な点がございましたら、お気軽にお問い合わせください。</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 共有対象選択 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-users me-2"></i>
+                                    共有対象
+                                </h5>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="shareTarget" id="shareTargetSeminar" checked>
+                                    <label class="btn btn-outline-primary" for="shareTargetSeminar">セミナー参加者</label>
+                                    
+                                    <input type="radio" class="btn-check" name="shareTarget" id="shareTargetCustom">
+                                    <label class="btn btn-outline-primary" for="shareTargetCustom">個別選択</label>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- セミナー参加者選択 -->
+                                <div id="seminarParticipants">
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-graduation-cap me-2"></i>
+                                        <strong>プログラミング基礎セミナー</strong>の参加者 <strong>12名</strong> に共有されます
+                                        <div class="mt-2">
+                                            <a href="seminar-participants.html" class="btn btn-outline-info btn-sm">
+                                                <i class="fas fa-edit me-1"></i>参加者を変更
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 個別選択 -->
+                                <div id="customParticipants" style="display: none;">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th width="50">
+                                                        <input type="checkbox" class="form-check-input">
+                                                    </th>
+                                                    <th>ユーザー</th>
+                                                    <th>部署</th>
+                                                    <th>ステータス</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" class="form-check-input" checked></td>
+                                                    <td>佐藤 太郎</td>
+                                                    <td>エンジニアリング部</td>
+                                                    <td><span class="badge bg-success">アクティブ</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="form-check-input"></td>
+                                                    <td>田中 花子</td>
+                                                    <td>マーケティング部</td>
+                                                    <td><span class="badge bg-success">アクティブ</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- プレビュー -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-eye me-2"></i>
+                                    共有プレビュー
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold">メール通知内容</h6>
+                                        <div class="bg-light p-3 rounded">
+                                            <strong>件名:</strong> 【domyaku】事前課題が配布されました<br><br>
+                                            <strong>本文:</strong><br>
+                                            お疲れ様です。<br><br>
+                                            「プログラミング基礎セミナー」の事前課題をお送りします。<br><br>
+                                            <strong>ワークシート:</strong> プログラミング基礎 - 事前課題<br>
+                                            <strong>種類:</strong> 事前課題<br>
+                                            <strong>制限時間:</strong> 60分<br>
+                                            <strong>提出期限:</strong> 2025年9月14日 23:59<br><br>
+                                            <strong>カスタムメッセージ:</strong><br>
+                                            いつもお疲れ様です。セミナーの事前課題をお送りします...<br><br>
+                                            ▼回答はこちら<br>
+                                            https://domyaku.example.com/worksheet/123
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold">共有設定まとめ</h6>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>共有タイプ: 事前課題</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>公開開始: 2025年9月10日 09:00</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>回答期限: 2025年9月14日 23:59</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>対象者: セミナー参加者 12名</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>メール通知: 有効</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>期限後回答: 受付</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>リマインダー: 有効</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- アクションボタン -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="worksheets.html" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>戻る
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-primary" onclick="saveDraft()">
+                            <i class="fas fa-save me-1"></i>下書き保存
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="shareWorksheet()">
+                            <i class="fas fa-share me-1"></i>ワークシートを共有
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/mock-behavior.js"></script>
+    <script>
+        // 共有タイプ選択
+        function selectShareType(type) {
+            document.querySelectorAll('.share-type-card').forEach(card => {
+                card.classList.remove('border-primary');
+            });
+            document.querySelector(`#shareType${type.charAt(0).toUpperCase() + type.slice(1)}`).checked = true;
+            event.currentTarget.classList.add('border-primary');
+        }
+
+        // 共有対象切り替え
+        document.addEventListener('DOMContentLoaded', function() {
+            const seminarRadio = document.getElementById('shareTargetSeminar');
+            const customRadio = document.getElementById('shareTargetCustom');
+            const seminarDiv = document.getElementById('seminarParticipants');
+            const customDiv = document.getElementById('customParticipants');
+
+            seminarRadio.addEventListener('change', function() {
+                if (this.checked) {
+                    seminarDiv.style.display = 'block';
+                    customDiv.style.display = 'none';
+                }
+            });
+
+            customRadio.addEventListener('change', function() {
+                if (this.checked) {
+                    seminarDiv.style.display = 'none';
+                    customDiv.style.display = 'block';
+                }
+            });
+        });
+
+        // 下書き保存
+        function saveDraft() {
+            alert('共有設定を下書きとして保存しました。');
+        }
+
+        // ワークシート共有
+        function shareWorksheet() {
+            const shareType = document.querySelector('input[name="shareType"]:checked').value;
+            const target = document.querySelector('input[name="shareTarget"]:checked').id === 'shareTargetSeminar' ? 'セミナー参加者' : '選択されたユーザー';
+            const notification = document.getElementById('notifyOnShare').checked ? 'あり' : 'なし';
+            
+            if (confirm(`ワークシートを${target}に共有し、メール通知を送信しますか？\n\n共有タイプ: ${shareType}\nメール通知: ${notification}`)) {
+                alert('ワークシートを共有し、メール通知を送信しました。');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワークシート編集（簡易版） - 動脈硬化予防研修システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .question-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-divider {
+            border-left: 4px solid #0d6efd;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="fas fa-heartbeat me-2"></i>動脈硬化予防研修
+            </a>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <!-- 画面上部のアクションエリア -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <h2 class="h4 mb-0">ワークシート編集</h2>
+                <p class="text-muted mb-0">プログラミング基礎ワークシート</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex gap-2 justify-content-end">
+                    <!-- 公開設定 -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-cog me-1"></i>設定
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><h6 class="dropdown-header">ステータス</h6></li>
+                            <li><a class="dropdown-item active" href="#"><i class="fas fa-edit me-2"></i>下書き</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-globe me-2"></i>公開中</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-lock me-2"></i>受付終了</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 統計情報 -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-chart-bar me-1"></i>統計
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 200px;">
+                            <div class="text-center mb-2">
+                                <h5 class="text-primary mb-1">4</h5>
+                                <small class="text-muted">セクション数</small>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h6 class="text-success mb-1">7</h6>
+                                    <small class="text-muted">質問数</small>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="text-warning mb-1">0</h6>
+                                    <small class="text-muted">回答者数</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- アクション -->
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-tools me-1"></i>アクション
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>プレビュー</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>複製</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-download me-2"></i>エクスポート</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i>削除</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 保存・公開ボタン -->
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-save me-1"></i>保存
+                    </button>
+                    <button type="button" class="btn btn-success">
+                        <i class="fas fa-paper-plane me-1"></i>公開
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- メイン編集エリア -->
+            <div class="col-12">
+                <!-- ワークシート基本情報 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-info-circle me-2"></i>基本情報
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="worksheetTitle" class="form-label">
+                                        タイトル <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="worksheetTitle" 
+                                           value="プログラミング基礎ワークシート" 
+                                           placeholder="ワークシートのタイトルを入力" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="worksheetType" class="form-label">
+                                        種類 <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="worksheetType" required>
+                                        <option value="">種類を選択してください</option>
+                                        <option value="pre" selected>事前課題</option>
+                                        <option value="during">セミナー中</option>
+                                        <option value="post">事後課題</option>
+                                        <option value="other">その他</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- セクション1: 基本情報 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-info-circle me-2 text-primary"></i>セクション1: 基本情報
+                            </h5>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary btn-sm me-2">
+                                    <i class="fas fa-plus me-1"></i>質問追加
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-edit me-1"></i>セクション編集
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- 質問1 -->
+                        <div class="question-item">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h6 class="text-primary">質問 1-1</h6>
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-outline-primary">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">質問タイプ</label>
+                                <select class="form-select form-select-sm">
+                                    <option value="text" selected>記述式</option>
+                                    <option value="multiple">選択式（単一回答）</option>
+                                    <option value="checkbox">選択式（複数回答）</option>
+                                    <option value="rating">評価スケール（点数）</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">質問文</label>
+                                <textarea class="form-control" rows="2">お名前を入力してください</textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">補足・ヘルプテキスト</label>
+                                <textarea class="form-control" rows="2">フルネームで入力してください</textarea>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" checked>
+                                <label class="form-check-label">必須回答</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- セクション2: 目標設定 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-bullseye me-2 text-success"></i>セクション2: 目標設定
+                            </h5>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary btn-sm me-2">
+                                    <i class="fas fa-plus me-1"></i>質問追加
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-edit me-1"></i>セクション編集
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">このセクションの質問は編集画面で追加できます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

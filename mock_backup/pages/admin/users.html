@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー管理 - domyaku</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-chart-line"></i>
+                domyaku
+            </a>
+            
+            <div class="navbar-nav ms-auto">
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                        <div class="user-avatar me-2">田</div>
+                        <span>田中 管理者</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>プロフィール</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>設定</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../auth/login.html"><i class="fas fa-sign-out-alt me-2"></i>ログアウト</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <div class="sidebar-content">
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>ダッシュボード</span>
+                        </a>
+                        <a class="nav-link" href="seminars.html">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>セミナー管理</span>
+                        </a>
+                        <a class="nav-link" href="worksheets.html">
+                            <i class="fas fa-file-alt"></i>
+                            <span>ワークシート</span>
+                        </a>
+                        <a class="nav-link active" href="users.html">
+                            <i class="fas fa-users"></i>
+                            <span>ユーザー管理</span>
+                        </a>
+                        <a class="nav-link" href="../company/settings.html">
+                            <i class="fas fa-building"></i>
+                            <span>会社設定</span>
+                        </a>
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>分析・レポート</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="container-fluid py-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="page-title">
+                                <i class="fas fa-users text-primary me-3"></i>
+                                ユーザー管理
+                            </h2>
+                            <p class="text-muted">ユーザーの招待・管理・権限設定を行います</p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-upload me-2"></i>
+                                CSVインポート
+                            </button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
+                                <i class="fas fa-user-plus me-2"></i>
+                                ユーザー招待
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-card-body">
+                                    <div class="stat-icon primary">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">47</div>
+                                        <div class="stat-label">総ユーザー数</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-card-body">
+                                    <div class="stat-icon success">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">42</div>
+                                        <div class="stat-label">アクティブ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-card-body">
+                                    <div class="stat-icon warning">
+                                        <i class="fas fa-user-clock"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">3</div>
+                                        <div class="stat-label">招待中</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-card-body">
+                                    <div class="stat-icon info">
+                                        <i class="fas fa-user-shield"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">5</div>
+                                        <div class="stat-label">管理者</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filter and Search -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">検索</label>
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control" placeholder="名前またはメールアドレスで検索...">
+                                        <i class="fas fa-search position-absolute end-0 top-50 translate-middle-y me-3 text-muted"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">役割</label>
+                                    <select class="form-select">
+                                        <option value="">すべて</option>
+                                        <option value="admin">管理者</option>
+                                        <option value="manager">マネージャー</option>
+                                        <option value="participant">参加者</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">部署</label>
+                                    <select class="form-select">
+                                        <option value="">すべて</option>
+                                        <option value="hr">人事部</option>
+                                        <option value="sales">営業部</option>
+                                        <option value="engineering">開発部</option>
+                                        <option value="marketing">マーケティング部</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">ステータス</label>
+                                    <select class="form-select">
+                                        <option value="">すべて</option>
+                                        <option value="active">アクティブ</option>
+                                        <option value="pending">招待中</option>
+                                        <option value="inactive">非アクティブ</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button class="btn btn-outline-primary w-100">
+                                        <i class="fas fa-filter me-2"></i>
+                                        フィルター
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users List -->
+                    <div class="card">
+                        <div class="card-header bg-white border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 fw-bold">ユーザー一覧</h5>
+                                <div class="d-flex align-items-center">
+                                    <span class="text-muted me-3">表示: 1-10 / 47件</span>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-secondary active">
+                                            <i class="fas fa-list"></i>
+                                        </button>
+                                        <button class="btn btn-outline-secondary">
+                                            <i class="fas fa-th"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body p-0">
+                            <!-- User Items -->
+                            <div class="user-item border-bottom p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar-large me-3">田</div>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">田中 太郎</h6>
+                                                <p class="text-muted mb-1 small">tanaka@company.com</p>
+                                                <span class="badge bg-primary">人事部</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="badge bg-danger">管理者</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="fw-bold text-success">85%</div>
+                                            <div class="small text-muted">完了率</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="small text-muted">最終ログイン</div>
+                                            <div class="fw-bold">2024/02/28</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="badge bg-success">アクティブ</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>詳細表示</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>編集</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-key me-2"></i>権限変更</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-user-slash me-2"></i>無効化</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="user-item border-bottom p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar-large me-3">佐</div>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">佐藤 花子</h6>
+                                                <p class="text-muted mb-1 small">sato@company.com</p>
+                                                <span class="badge bg-info">営業部</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="badge bg-warning">マネージャー</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="fw-bold text-success">92%</div>
+                                            <div class="small text-muted">完了率</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="small text-muted">最終ログイン</div>
+                                            <div class="fw-bold">2024/02/28</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="badge bg-success">アクティブ</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>詳細表示</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>編集</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-key me-2"></i>権限変更</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-user-slash me-2"></i>無効化</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="user-item border-bottom p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar-large me-3">鈴</div>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">鈴木 一郎</h6>
+                                                <p class="text-muted mb-1 small">suzuki@company.com</p>
+                                                <span class="badge bg-success">開発部</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="badge bg-info">参加者</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="fw-bold text-warning">65%</div>
+                                            <div class="small text-muted">完了率</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="small text-muted">最終ログイン</div>
+                                            <div class="fw-bold">2024/02/26</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="badge bg-success">アクティブ</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>詳細表示</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>編集</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-key me-2"></i>権限変更</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-user-slash me-2"></i>無効化</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="user-item p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar-large pending me-3">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">高橋 美咲</h6>
+                                                <p class="text-muted mb-1 small">takahashi@company.com</p>
+                                                <span class="badge bg-warning">マーケティング部</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="badge bg-info">参加者</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="fw-bold text-muted">-</div>
+                                            <div class="small text-muted">完了率</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <div class="small text-muted">招待日</div>
+                                            <div class="fw-bold">2024/02/25</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="badge bg-warning">招待中</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-paper-plane me-2"></i>招待再送</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>編集</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-times me-2"></i>招待取消</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="card-footer bg-white border-top">
+                            <nav>
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invite User Modal -->
+    <div class="modal fade" id="inviteUserModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-plus text-primary me-2"></i>
+                        ユーザー招待
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="inviteUserForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">姓 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="田中" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">名 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="太郎" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">メールアドレス <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" placeholder="tanaka@company.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">役割 <span class="text-danger">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">選択してください</option>
+                                    <option value="admin">管理者</option>
+                                    <option value="manager">マネージャー</option>
+                                    <option value="participant">参加者</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">部署</label>
+                                <select class="form-select">
+                                    <option value="">選択してください</option>
+                                    <option value="hr">人事部</option>
+                                    <option value="sales">営業部</option>
+                                    <option value="engineering">開発部</option>
+                                    <option value="marketing">マーケティング部</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">職位</label>
+                                <input type="text" class="form-control" placeholder="課長">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">招待メッセージ</label>
+                                <textarea class="form-control" rows="3" placeholder="招待メッセージを入力（任意）"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="sendWelcomeEmail" checked>
+                                    <label class="form-check-label" for="sendWelcomeEmail">
+                                        ウェルカムメールを送信する
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" form="inviteUserForm" class="btn btn-primary">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        招待を送信
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/mock-behavior.js"></script>
+    <script>
+        // Invite user form
+        document.getElementById('inviteUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('inviteUserModal'));
+            modal.hide();
+            showSuccessMessage('招待メールが送信されました！');
+        });
+    </script>
+
+    <style>
+        .user-item:hover {
+            background-color: var(--gray-50);
+        }
+        
+        .user-avatar-large {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .user-avatar-large.pending {
+            background: var(--gray-300);
+            color: var(--gray-600);
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワークシート回答 - セミナーワークシート管理システム</title>
+    <link rel="stylesheet" href="../css/common.css">`n    <link rel="stylesheet" href="../css/monochrome.css">`n    <link rel="stylesheet" href="../css/debug.css">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">domyaku</div>
+                <div class="user-menu">
+                    <span>参加者: 佐藤花子</span>
+                    <button class="btn btn-outline btn-sm" onclick="saveDraft()">下書き保存</button>
+                    <a href="participant_dashboard.html" class="btn btn-secondary btn-sm">戻る</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="card mb-20">
+                <div class="card-header">
+                    <h1 class="card-title">研修振り返りシート</h1>
+                    <p>セミナー: 新人研修プログラム 2025</p>
+                    <div class="worksheet-info">
+                        <span class="text-muted">📝 8問 | ⏱️ 回答時間: 約10分 | 回答期限: 2025-09-05 23:59</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 進捗表示 -->
+            <div class="card mb-20">
+                <div class="card-body">
+                    <div class="d-flex justify-between align-center mb-10">
+                        <span>回答進捗</span>
+                        <span id="progressText">3/8問回答済み</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar" style="width: 37.5%;">37.5%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 回答フォーム -->
+            <form id="worksheetForm">
+                <!-- セクション1: 基本的な質問 -->
+                <div class="card mb-20">
+                    <div class="card-header">
+                        <h2 class="card-title">基本的な質問</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- 質問1 -->
+                        <div class="question-container mb-30" data-question="1">
+                            <h3 class="question-title">質問 1 <span class="required">*</span></h3>
+                            <p class="question-text">研修を受講した感想をお聞かせください。</p>
+                            <div class="answer-container">
+                                <textarea name="answer_1" class="form-control" rows="4" placeholder="感想をご記入ください" required></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- 質問2 -->
+                        <div class="question-container mb-30" data-question="2">
+                            <h3 class="question-title">質問 2 <span class="required">*</span></h3>
+                            <p class="question-text">今回の研修の満足度を教えてください。</p>
+                            <div class="answer-container">
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="answer_2" value="とても満足" required>
+                                        <span class="radio-label">とても満足</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="answer_2" value="満足" required>
+                                        <span class="radio-label">満足</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="answer_2" value="普通" required>
+                                        <span class="radio-label">普通</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="answer_2" value="不満" required>
+                                        <span class="radio-label">不満</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 質問3 -->
+                        <div class="question-container mb-30" data-question="3">
+                            <h3 class="question-title">質問 3</h3>
+                            <p class="question-text">今回の研修で特に印象に残った内容があれば教えてください。（任意）</p>
+                            <div class="answer-container">
+                                <textarea name="answer_3" class="form-control" rows="3" placeholder="印象に残った内容があればご記入ください"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- セクション2: スキル評価 -->
+                <div class="card mb-20">
+                    <div class="card-header">
+                        <h2 class="card-title">スキル評価</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- 質問4 -->
+                        <div class="question-container mb-30" data-question="4">
+                            <h3 class="question-title">質問 4 <span class="required">*</span></h3>
+                            <p class="question-text">研修後のスキル向上度を1-5で評価してください。</p>
+                            <div class="answer-container">
+                                <div class="scale-container">
+                                    <div class="scale-labels">
+                                        <span class="scale-label-left">全く向上しなかった</span>
+                                        <span class="scale-label-right">大幅に向上した</span>
+                                    </div>
+                                    <div class="scale-options">
+                                        <label class="scale-option">
+                                            <input type="radio" name="answer_4" value="1" required>
+                                            <span class="scale-number">1</span>
+                                        </label>
+                                        <label class="scale-option">
+                                            <input type="radio" name="answer_4" value="2" required>
+                                            <span class="scale-number">2</span>
+                                        </label>
+                                        <label class="scale-option">
+                                            <input type="radio" name="answer_4" value="3" required>
+                                            <span class="scale-number">3</span>
+                                        </label>
+                                        <label class="scale-option">
+                                            <input type="radio" name="answer_4" value="4" required>
+                                            <span class="scale-number">4</span>
+                                        </label>
+                                        <label class="scale-option">
+                                            <input type="radio" name="answer_4" value="5" required>
+                                            <span class="scale-number">5</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 質問5 -->
+                        <div class="question-container mb-30" data-question="5">
+                            <h3 class="question-title">質問 5 <span class="required">*</span></h3>
+                            <p class="question-text">今後重点的に学びたい分野を選択してください。（複数選択可）</p>
+                            <div class="answer-container">
+                                <div class="checkbox-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="answer_5" value="コミュニケーション">
+                                        <span class="checkbox-label">コミュニケーション</span>
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="answer_5" value="リーダーシップ">
+                                        <span class="checkbox-label">リーダーシップ</span>
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="answer_5" value="プロジェクト管理">
+                                        <span class="checkbox-label">プロジェクト管理</span>
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="answer_5" value="技術スキル">
+                                        <span class="checkbox-label">技術スキル</span>
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="answer_5" value="その他">
+                                        <span class="checkbox-label">その他</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 送信ボタン -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mb-20">
+                            <span class="text-muted">回答は自動保存されます。</span>
+                        </div>
+                        <div class="d-flex gap-15 justify-center">
+                            <button type="button" class="btn btn-outline" onclick="saveDraft()">下書き保存</button>
+                            <button type="submit" class="btn btn-primary">回答を送信</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2025 セミナーワークシート管理システム. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <style>
+        .question-container {
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background-color: white;
+        }
+        .question-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .required {
+            color: var(--danger-color);
+        }
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .radio-option:hover, .checkbox-option:hover {
+            border-color: var(--primary-color);
+            background-color: #f8f9fa;
+        }
+        .radio-option input:checked + .radio-label,
+        .checkbox-option input:checked + .checkbox-label {
+            font-weight: 600;
+        }
+        .radio-option:has(input:checked),
+        .checkbox-option:has(input:checked) {
+            border-color: var(--primary-color);
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+        .scale-container {
+            text-align: center;
+        }
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        .scale-options {
+            display: flex;
+            justify-content: space-between;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .scale-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .scale-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border: 2px solid #e9ecef;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .scale-option input {
+            display: none;
+        }
+        .scale-option:hover .scale-number {
+            border-color: var(--primary-color);
+            background-color: #f8f9fa;
+        }
+        .scale-option:has(input:checked) .scale-number {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            transition: width 0.3s ease;
+        }
+    </style>
+    
+    <script src="../js/common.js"></script>
+    <script>
+        let autoSaveTimer;
+        
+        // フォーム要素の変更を監視
+        document.getElementById('worksheetForm').addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                autoSave();
+            }, 2000); // 2秒後に自動保存
+            
+            updateProgress();
+        });
+        
+        function updateProgress() {
+            const form = document.getElementById('worksheetForm');
+            const requiredInputs = form.querySelectorAll('input[required], textarea[required]');
+            const completedInputs = Array.from(requiredInputs).filter(input => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    return form.querySelector(`input[name="${input.name}"]:checked`);
+                } else {
+                    return input.value.trim() !== '';
+                }
+            });
+            
+            const progress = (completedInputs.length / requiredInputs.length) * 100;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = Math.round(progress) + '%';
+            progressText.textContent = `${completedInputs.length}/${requiredInputs.length}問回答済み`;
+        }
+        
+        function autoSave() {
+            // 自動保存処理のシミュレーション
+            console.log('自動保存しました');
+        }
+        
+        function saveDraft() {
+            showAlert('下書きを保存しました', 'success');
+        }
+        
+        document.getElementById('worksheetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const requiredInputs = form.querySelectorAll('input[required], textarea[required]');
+            let isValid = true;
+            
+            // バリデーション
+            requiredInputs.forEach(input => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    if (!form.querySelector(`input[name="${input.name}"]:checked`)) {
+                        isValid = false;
+                        const questionContainer = input.closest('.question-container');
+                        showError(questionContainer.querySelector('.answer-container'), 'この項目は必須です');
+                    }
+                } else if (!input.value.trim()) {
+                    isValid = false;
+                    showError(input, 'この項目は必須です');
+                }
+            });
+            
+            // 質問5（複数選択）の特別なバリデーション
+            const answer5Checked = form.querySelectorAll('input[name="answer_5"]:checked');
+            if (answer5Checked.length === 0) {
+                isValid = false;
+                const question5Container = form.querySelector('[data-question="5"] .answer-container');
+                showError(question5Container, '少なくとも1つ選択してください');
+            }
+            
+            if (isValid) {
+                const submitButton = form.querySelector('button[type="submit"]');
+                showLoading(submitButton);
+                
+                setTimeout(() => {
+                    showAlert('回答を送信しました。ありがとうございました！', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'participant_dashboard.html';
+                    }, 1500);
+                }, 1500);
+            }
+        });
+        
+        // 初期進捗更新
+        updateProgress();
+    </script>
+</body>
+</html>
+
+
+
+

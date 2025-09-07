@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン - セミナーシステム</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+    <style>
+        /* ログイン画面専用スタイル */
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #6c757d;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .input-group .form-control {
+            border-left: 1px solid #dee2e6;
+        }
+        
+        .input-group .form-control:focus {
+            border-left: 1px solid #86b7fe;
+            border-color: #86b7fe;
+        }
+        
+        .input-group-text + .form-control:focus {
+            border-left: 1px solid #86b7fe;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container-fluid vh-100">
+        <div class="row h-100">
+            <!-- 左側: ブランディング -->
+            <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-primary text-white">
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-graduation-cap" style="font-size: 4rem;"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3">株式会社動脈</h2>
+                    <p class="lead">成長を矯正する人材育成会社</p>
+                    <ul class="list-unstyled mt-4">
+                        <li class="mb-2"><i class="fas fa-check me-2"></i>その人の価値を引き出す</li>
+                        <li class="mb-2"><i class="fas fa-check me-2"></i>内発的な動機を引き出す</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 右側: ログインフォーム -->
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="w-100" style="max-width: 400px;">
+                    <!-- モックナビゲーション -->
+                    <div class="text-center mb-4">
+                        <a href="../../index.html" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i>モック一覧に戻る
+                        </a>
+                    </div>
+
+                    <div class="card border-0 shadow">
+                        <div class="card-body p-4">
+                            <!-- ロゴ・タイトル -->
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold text-primary">ログイン</h3>
+                                <p class="text-muted">アカウントにサインインしてください</p>
+                            </div>
+
+                            <!-- ログインフォーム -->
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">メールアドレス</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <input type="email" 
+                                               class="form-control" 
+                                               id="email" 
+                                               name="email"
+                                               placeholder="your-email@example.com"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">パスワード</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                        <input type="password" 
+                                               class="form-control" 
+                                               id="password" 
+                                               name="password"
+                                               placeholder="パスワードを入力"
+                                               required>
+                                        <button class="btn btn-outline-secondary" 
+                                                type="button" 
+                                                id="togglePassword"
+                                                aria-label="パスワードを表示">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">
+                                        ログイン状態を保持する
+                                    </label>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg" data-loading>
+                                        <i class="fas fa-sign-in-alt me-2"></i>ログイン
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- その他のリンク -->
+                            <div class="text-center mt-4">
+                                <a href="#" class="text-decoration-none" onclick="showPasswordReset()">
+                                    パスワードをお忘れですか？
+                                </a>
+                            </div>
+
+                            <!-- システム情報 -->
+                            <div class="text-center mt-4">
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    アカウントをお持ちでない場合は管理者にお問い合わせください
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- パスワードリセットモーダル -->
+    <div class="modal fade" id="passwordResetModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-key me-2"></i>パスワードリセット
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>パスワードリセット用のリンクをメールで送信します。</p>
+                    <form>
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">メールアドレス</label>
+                            <input type="email" class="form-control" id="resetEmail" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" onclick="sendPasswordReset()">
+                        リセットリンクを送信
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/mock-behavior.js"></script>
+    <script>
+        // ページ固有のJavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // パスワード表示切り替え
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+
+            // ログインフォーム送信
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // モック認証ロジック
+                setTimeout(() => {
+                    if (email && password) {
+                        showToast('success', 'ログインしました。ダッシュボードに移動します...');
+                        setTimeout(() => {
+                            // 実際の実装では適切なダッシュボードにリダイレクト
+                            if (email.includes('admin')) {
+                                window.location.href = '../admin/dashboard.html';
+                            } else {
+                                window.location.href = '../participant/dashboard.html';
+                            }
+                        }, 1500);
+                    } else {
+                        showToast('error', 'メールアドレスとパスワードを入力してください');
+                    }
+                }, 1000);
+            });
+        });
+
+        function showPasswordReset() {
+            const modal = new bootstrap.Modal(document.getElementById('passwordResetModal'));
+            modal.show();
+        }
+
+        function sendPasswordReset() {
+            const email = document.getElementById('resetEmail').value;
+            if (email) {
+                showToast('success', 'パスワードリセットリンクを送信しました');
+                bootstrap.Modal.getInstance(document.getElementById('passwordResetModal')).hide();
+            } else {
+                showToast('error', 'メールアドレスを入力してください');
+            }
+        }
+    </script>
+</body>
+</html>
