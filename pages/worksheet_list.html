@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワークシート一覧 - セミナーワークシート管理システム</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/monochrome.css">
+    <link rel="stylesheet" href="../css/debug.css">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">domyaku</div>
+                <div class="user-menu">
+                    <span>事務局: 山田太郎</span>
+                    <a href="user_invitation.html" class="btn btn-outline btn-sm">ユーザー招待</a>
+                    <a href="login.html" class="btn btn-secondary btn-sm">ログアウト</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <nav class="nav">
+                <a href="instructor_dashboard.html" class="nav-link">ダッシュボード</a>
+                <a href="worksheet_list.html" class="nav-link active">ワークシート</a>
+                <a href="seminar_list.html" class="nav-link">セミナー</a>
+                <a href="user_invitation.html" class="nav-link">受講者</a>
+                <a href="company_registration.html" class="nav-link">会社</a>
+            </nav>
+            
+            <div class="d-flex justify-between align-center mb-20">
+                <h1>ワークシート一覧</h1>
+                <a href="worksheet_editor.html" class="btn btn-primary">新しいワークシート作成</a>
+            </div>
+            
+            <!-- 検索・フィルター -->
+            <div class="card mb-20">
+                <div class="card-body">
+                    <div style="display: grid; grid-template-columns: 1fr 200px 150px; gap: 15px; align-items: end;">
+                        <div class="form-group">
+                            <label for="search" class="form-label">ワークシート名で検索</label>
+                            <input type="text" id="search" class="form-control" placeholder="検索キーワードを入力">
+                        </div>
+                        <div class="form-group">
+                            <label for="sort" class="form-label">並び順</label>
+                            <select id="sort" class="form-control">
+                                <option value="created_desc">作成日（新しい順）</option>
+                                <option value="created_asc">作成日（古い順）</option>
+                                <option value="name_asc">名前（昇順）</option>
+                                <option value="name_desc">名前（降順）</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline" onclick="filterWorksheets()">検索</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ワークシート一覧 -->
+            <div id="worksheetGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px;">
+                <!-- ワークシート1 -->
+                <div class="card worksheet-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-between align-center">
+                            <h3 class="card-title">研修振り返りシート</h3>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleDropdown(this)">⋮</button>
+                                <div class="dropdown-menu">
+                                    <a href="worksheet_editor.html" class="dropdown-item">編集</a>
+                                    <a href="#" class="dropdown-item" onclick="previewWorksheet('研修振り返りシート')">プレビュー</a>
+                                    <a href="#" class="dropdown-item" onclick="duplicateWorksheet('研修振り返りシート')">複製</a>
+                                    <a href="#" class="dropdown-item text-danger" onclick="deleteWorksheet('研修振り返りシート')">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">2025-08-30 作成</p>
+                        <p>研修の効果を測定するための振り返り質問集です。参加者の学習成果と改善点を把握できます。</p>
+                        <div class="worksheet-stats">
+                            <small class="text-muted">
+                                📝 質問数: 8個 | 📊 使用セミナー: 2個 | ⏱️ 回答時間: 約10分
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ワークシート2 -->
+                <div class="card worksheet-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-between align-center">
+                            <h3 class="card-title">自己評価アンケート</h3>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleDropdown(this)">⋮</button>
+                                <div class="dropdown-menu">
+                                    <a href="worksheet_editor.html" class="dropdown-item">編集</a>
+                                    <a href="#" class="dropdown-item" onclick="previewWorksheet('自己評価アンケート')">プレビュー</a>
+                                    <a href="#" class="dropdown-item" onclick="duplicateWorksheet('自己評価アンケート')">複製</a>
+                                    <a href="#" class="dropdown-item text-danger" onclick="deleteWorksheet('自己評価アンケート')">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">2025-08-29 作成</p>
+                        <p>参加者の自己評価と今後の目標設定を行います。個人の成長をサポートするための質問です。</p>
+                        <div class="worksheet-stats">
+                            <small class="text-muted">
+                                📝 質問数: 12個 | 📊 使用セミナー: 1個 | ⏱️ 回答時間: 約15分
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ワークシート3 -->
+                <div class="card worksheet-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-between align-center">
+                            <h3 class="card-title">理解度チェック</h3>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleDropdown(this)">⋮</button>
+                                <div class="dropdown-menu">
+                                    <a href="worksheet_editor.html" class="dropdown-item">編集</a>
+                                    <a href="#" class="dropdown-item" onclick="previewWorksheet('理解度チェック')">プレビュー</a>
+                                    <a href="#" class="dropdown-item" onclick="duplicateWorksheet('理解度チェック')">複製</a>
+                                    <a href="#" class="dropdown-item text-danger" onclick="deleteWorksheet('理解度チェック')">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">2025-08-28 作成</p>
+                        <p>講義内容の理解度を確認するための質問です。基本的な知識から応用まで幅広くカバーします。</p>
+                        <div class="worksheet-stats">
+                            <small class="text-muted">
+                                📝 質問数: 6個 | 📊 使用セミナー: 3個 | ⏱️ 回答時間: 約8分
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ワークシート4 -->
+                <div class="card worksheet-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-between align-center">
+                            <h3 class="card-title">事前アンケート</h3>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleDropdown(this)">⋮</button>
+                                <div class="dropdown-menu">
+                                    <a href="worksheet_editor.html" class="dropdown-item">編集</a>
+                                    <a href="#" class="dropdown-item" onclick="previewWorksheet('事前アンケート')">プレビュー</a>
+                                    <a href="#" class="dropdown-item" onclick="duplicateWorksheet('事前アンケート')">複製</a>
+                                    <a href="#" class="dropdown-item text-danger" onclick="deleteWorksheet('事前アンケート')">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">2025-08-25 作成</p>
+                        <p>セミナー開始前に参加者の背景や期待を把握するためのアンケートです。</p>
+                        <div class="worksheet-stats">
+                            <small class="text-muted">
+                                📝 質問数: 10個 | 📊 使用セミナー: 2個 | ⏱️ 回答時間: 約12分
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ワークシート5 -->
+                <div class="card worksheet-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-between align-center">
+                            <h3 class="card-title">満足度調査</h3>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleDropdown(this)">⋮</button>
+                                <div class="dropdown-menu">
+                                    <a href="worksheet_editor.html" class="dropdown-item">編集</a>
+                                    <a href="#" class="dropdown-item" onclick="previewWorksheet('満足度調査')">プレビュー</a>
+                                    <a href="#" class="dropdown-item" onclick="duplicateWorksheet('満足度調査')">複製</a>
+                                    <a href="#" class="dropdown-item text-danger" onclick="deleteWorksheet('満足度調査')">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">2025-08-22 作成</p>
+                        <p>セミナー終了後の満足度と改善提案を収集するための調査です。</p>
+                        <div class="worksheet-stats">
+                            <small class="text-muted">
+                                📝 質問数: 5個 | 📊 使用セミナー: 1個 | ⏱️ 回答時間: 約5分
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2025 セミナーワークシート管理システム. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <style>
+        .worksheet-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .worksheet-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .worksheet-stats {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: none;
+            min-width: 120px;
+            z-index: 1000;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.2s ease;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        .dropdown-item.text-danger {
+            color: var(--danger-color);
+        }
+    </style>
+    
+    <script src="../js/common.js"></script>
+    <script>
+        function toggleDropdown(button) {
+            const dropdown = button.nextElementSibling;
+            const isShow = dropdown.classList.contains('show');
+            
+            // 他のドロップダウンを閉じる
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                menu.classList.remove('show');
+            });
+            
+            if (!isShow) {
+                dropdown.classList.add('show');
+            }
+        }
+        
+        // ドロップダウンの外側クリックで閉じる
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+        });
+        
+        function previewWorksheet(name) {
+            showAlert(`${name} のプレビューを開きます`, 'info');
+        }
+        
+        function duplicateWorksheet(name) {
+            confirmAction(`${name} を複製しますか？`, () => {
+                showAlert(`${name} を複製しました`, 'success');
+            });
+        }
+        
+        function deleteWorksheet(name) {
+            confirmAction(`${name} を削除しますか？この操作は取り消せません。`, () => {
+                showAlert(`${name} を削除しました`, 'success');
+            });
+        }
+        
+        function filterWorksheets() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const sortOrder = document.getElementById('sort').value;
+            
+            // 検索・ソート処理のシミュレーション
+            showAlert('検索結果を更新しました', 'success');
+        }
+    </script>
+</body>
+</html>
+
+
+
+

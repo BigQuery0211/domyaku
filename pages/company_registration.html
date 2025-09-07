@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会社一覧 - domyaku</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/monochrome.css">
+    <link rel="stylesheet" href="../css/debug.css">
+    <style>
+        /* モーダルスタイル */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal.show {
+            display: block;
+        }
+        
+        .modal-dialog {
+            position: relative;
+            margin: 30px auto;
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+        
+        .d-flex {
+            display: flex;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .align-center {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">domyaku</div>
+                <div class="user-menu">
+                    <span>事務局: 山田太郎</span>
+                    <a href="instructor_dashboard.html" class="btn btn-outline btn-sm">ダッシュボード</a>
+                    <a href="login.html" class="btn btn-secondary btn-sm">ログアウト</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <nav class="nav">
+                <a href="instructor_dashboard.html" class="nav-link">ダッシュボード</a>
+                <a href="worksheet_list.html" class="nav-link">ワークシート</a>
+                <a href="seminar_list.html" class="nav-link">セミナー</a>
+                <a href="user_invitation.html" class="nav-link">受講者</a>
+                <a href="company_registration.html" class="nav-link active">会社</a>
+            </nav>
+
+            <div class="d-flex justify-between align-center mb-20">
+                <h1>会社一覧</h1>
+                <a href="worksheet_editor.html" class="btn btn-primary">新規会社登録</a>
+            </div>
+            
+            <!-- 検索・フィルター -->
+            <div class="card mb-20">
+                <div class="card-body">
+                    <div style="display: grid; grid-template-columns: 1fr 200px 150px; gap: 15px; align-items: end;">
+                        <div class="form-group">
+                            <label for="search" class="form-label">会社名で検索</label>
+                            <input type="text" id="search" class="form-control" placeholder="会社名を入力">
+                        </div>
+                        <div class="form-group">
+                            <label for="sort" class="form-label">作成日（新しい順）</label>
+                            <select id="sort" class="form-control">
+                                <option value="created_desc">作成日（新しい順）</option>
+                                <option value="created_asc">作成日（古い順）</option>
+                                <option value="name_asc">名前（昇順）</option>
+                                <option value="name_desc">名前（降順）</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline" onclick="filterWorksheets()">検索</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-between align-center">
+                        <div>
+                            <h2 class="card-title">会社一覧</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>会社名</th>
+                                <th>担当者</th>
+                                <th>担当者メール</th>
+                                <th>携帯番号</th>
+                                <th>登録日</th>
+                                <th>ステータス</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companyList">
+                            <tr>
+                                <td>株式会社サンプル</td>
+                                <td>田中太郎</td>
+                                <td>tanaka@sample.com</td>
+                                <td>090-1234-5678</td>
+                                <td>2024-01-15</td>
+                                <td><span class="badge badge-success">有効</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="editCompany(1)">編集</button>
+                                    <button class="btn btn-danger btn-sm" onclick="disableCompany(1)">無効化</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>テスト株式会社</td>
+                                <td>佐藤花子</td>
+                                <td>sato@test.com</td>
+                                <td>080-2345-6789</td>
+                                <td>2024-02-01</td>
+                                <td><span class="badge badge-success">有効</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="editCompany(2)">編集</button>
+                                    <button class="btn btn-danger btn-sm" onclick="disableCompany(2)">無効化</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>デモ企業</td>
+                                <td>鈴木次郎</td>
+                                <td>suzuki@demo.com</td>
+                                <td>070-3456-7890</td>
+                                <td>2024-02-15</td>
+                                <td><span class="badge badge-success">有効</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="editCompany(3)">編集</button>
+                                    <button class="btn btn-danger btn-sm" onclick="disableCompany(3)">無効化</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>株式会社テクノロジー</td>
+                                <td>山田三郎</td>
+                                <td>yamada@tech.com</td>
+                                <td>090-4567-8901</td>
+                                <td>2024-03-01</td>
+                                <td><span class="badge badge-success">有効</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="editCompany(4)">編集</button>
+                                    <button class="btn btn-danger btn-sm" onclick="disableCompany(4)">無効化</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 会社登録モーダル -->
+            <div class="modal fade" id="companyModal" tabindex="-1" aria-labelledby="companyModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="companyModalLabel">新規会社登録</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-info mb-20">
+                                <h6>🏢 事務方による会社登録</h6>
+                                <p>新規会社を登録します。登録後、ユーザー招待機能をご利用いただけます。</p>
+                            </div>
+                            
+                            <form id="companyRegistrationForm" data-validate="true">
+                                <div class="form-group">
+                                    <label for="company_name" class="form-label">会社名 *</label>
+                                    <input type="text" id="company_name" name="company_name" class="form-control" placeholder="例: 株式会社サンプル" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="admin_name" class="form-label">担当者名 *</label>
+                                    <input type="text" id="admin_name" name="admin_name" class="form-control" placeholder="例: 山田 太郎" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="admin_email" class="form-label">担当者メールアドレス *</label>
+                                    <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="例: yamada@example.com" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="admin_phone" class="form-label">担当者携帯番号 *</label>
+                                    <input type="tel" id="admin_phone" name="admin_phone" class="form-control" placeholder="例: 090-1234-5678" required>
+                                    <small class="text-muted">緊急時の連絡先として使用されます</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="notes" class="form-label">備考</label>
+                                    <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="その他の情報があれば記載してください"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                            <button type="button" class="btn btn-primary" onclick="submitCompanyForm()">会社を登録する</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/common.js"></script>
+    <script>
+        // Bootstrap 5のモーダル機能をシミュレート
+        function toggleModal(modalId, show = true) {
+            const modal = document.getElementById(modalId);
+            if (show) {
+                modal.style.display = 'block';
+                modal.classList.add('show');
+                document.body.classList.add('modal-open');
+            } else {
+                modal.style.display = 'none';
+                modal.classList.remove('show');
+                document.body.classList.remove('modal-open');
+            }
+        }
+        
+        // モーダル開閉のイベントリスナー
+        document.addEventListener('click', function(e) {
+            if (e.target.getAttribute('data-bs-toggle') === 'modal') {
+                const targetModal = e.target.getAttribute('data-bs-target').substring(1);
+                toggleModal(targetModal, true);
+            }
+            
+            if (e.target.getAttribute('data-bs-dismiss') === 'modal' || e.target.classList.contains('btn-close')) {
+                const modal = e.target.closest('.modal');
+                if (modal) {
+                    toggleModal(modal.id, false);
+                }
+            }
+        });
+        
+        // モーダル外クリックで閉じる
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                toggleModal(e.target.id, false);
+            }
+        });
+        
+        function submitCompanyForm() {
+            const form = document.getElementById('companyRegistrationForm');
+            if (validateForm('companyRegistrationForm')) {
+                showLoading(document.querySelector('.modal-footer .btn-primary'));
+                
+                // 事務方による会社登録処理のシミュレーション
+                setTimeout(() => {
+                    const companyName = document.getElementById('company_name').value;
+                    const adminName = document.getElementById('admin_name').value;
+                    const adminEmail = document.getElementById('admin_email').value;
+                    const adminPhone = document.getElementById('admin_phone').value;
+                    
+                    // テーブルに新しい行を追加
+                    const tbody = document.querySelector('#companyList');
+                    const newRow = `
+                        <tr>
+                            <td>${companyName}</td>
+                            <td>${adminName}</td>
+                            <td>${adminEmail}</td>
+                            <td>${adminPhone}</td>
+                            <td>${new Date().toLocaleDateString('ja-JP')}</td>
+                            <td><span class="badge badge-success">有効</span></td>
+                            <td>
+                                <button class="btn btn-outline btn-sm" onclick="editCompany(${Date.now()})">編集</button>
+                                <button class="btn btn-danger btn-sm" onclick="disableCompany(${Date.now()})">無効化</button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.insertAdjacentHTML('afterbegin', newRow);
+                    
+                    showAlert(`${companyName} の登録が完了しました。ユーザー招待機能が利用可能になりました。`, 'success');
+                    
+                    // フォームリセットとモーダル閉じる
+                    form.reset();
+                    toggleModal('companyModal', false);
+                    hideLoading(document.querySelector('.modal-footer .btn-primary'));
+                }, 2000);
+            }
+        }
+        
+        function editCompany(companyId) {
+            showAlert('会社情報の編集機能は今後実装予定です', 'info');
+        }
+        
+        function disableCompany(companyId) {
+            confirmAction('この会社を無効化しますか？', () => {
+                showAlert('会社が無効化されました', 'success');
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
