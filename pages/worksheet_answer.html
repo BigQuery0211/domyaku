@@ -201,6 +201,18 @@
             border: 1px solid #e9ecef;
             border-radius: 8px;
             background-color: white;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        /* 最初の質問コンテナは上マージンなし */
+        .question-container:first-child {
+            margin-top: 0;
+        }
+        
+        /* 最後の質問コンテナは下マージン大きく */
+        .question-container:last-child {
+            margin-bottom: 40px;
         }
         .question-title {
             font-size: 18px;
