@@ -517,7 +517,61 @@ a:not(.nav-link):not(.btn):hover {
     border: 0 !important;
 }
 
-/* レスポンシブ調整 */
+/* スケール評価スタイル */
+.scale-container {
+    margin: 20px 0;
+}
+
+.scale-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--medium-gray);
+}
+
+.scale-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.scale-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    min-width: 32px;
+    flex-shrink: 0;
+}
+
+.scale-option input[type="radio"] {
+    margin: 0 0 5px 0;
+    width: 18px;
+    height: 18px;
+}
+
+.scale-number {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--medium-gray);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.scale-option:hover .scale-number {
+    color: var(--black);
+}
+
+.scale-option input[type="radio"]:checked + .scale-number {
+    color: var(--black);
+    font-weight: bold;
+}
+
+/* スマホサイズでの調整 */
 @media (max-width: 768px) {
     .sidebar {
         background-color: var(--black) !important;
@@ -525,5 +579,29 @@ a:not(.nav-link):not(.btn):hover {
     
     .nav-link {
         color: var(--white) !important;
+    }
+    
+    .scale-options {
+        gap: 4px;
+        padding: 8px 0;
+    }
+    
+    .scale-option {
+        min-width: 28px;
+    }
+    
+    .scale-option input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        margin: 0 0 3px 0;
+    }
+    
+    .scale-number {
+        font-size: 11px;
+    }
+    
+    .scale-labels {
+        font-size: 12px;
+        margin-bottom: 8px;
     }
 }
