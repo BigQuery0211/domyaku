@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワークシート回答一覧 - domyaku</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/monochrome.css">
+    <link rel="stylesheet" href="../css/debug.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">domyaku</div>
+                <div class="user-menu">
+                    <span>講師: 田中太郎</span>
+                    <a href="login.html" class="btn btn-secondary btn-sm">ログアウト</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <nav class="nav">
+                <a href="instructor_dashboard.html" class="nav-link">ダッシュボード</a>
+                <a href="worksheet_list.html" class="nav-link">ワークシート</a>
+                <a href="seminar_list.html" class="nav-link active">セミナー</a>
+                <a href="user_invitation.html" class="nav-link">受講者</a>
+                <a href="company_registration.html" class="nav-link">会社</a>
+            </nav>
+
+            <!-- パンくずリスト -->
+            <nav aria-label="breadcrumb" class="mb-20">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="instructor_dashboard.html">ダッシュボード</a></li>
+                    <li class="breadcrumb-item"><a href="seminar_list.html">セミナー一覧</a></li>
+                    <li class="breadcrumb-item"><a href="seminar_detail.html">新人研修プログラム 2025</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">事前アンケート回答一覧</li>
+                </ol>
+            </nav>
+
+            <!-- ワークシート情報 -->
+            <div class="card mb-20">
+                <div class="card-header">
+                    <div class="d-flex justify-between align-center">
+                        <div>
+                            <h1 class="card-title">事前アンケート 回答一覧</h1>
+                            <p class="text-muted mb-0">セミナー: 新人研修プログラム 2025 (SEM-2025-001)</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary btn-sm" onclick="exportAnswers()">
+                                <i class="fas fa-download"></i> 回答データ出力
+                            </button>
+                            <a href="seminar_detail.html" class="btn btn-outline btn-sm">
+                                <i class="fas fa-arrow-left"></i> セミナー詳細に戻る
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number text-primary">25</div>
+                                <div class="stat-label">回答者数</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number text-success">5</div>
+                                <div class="stat-label">質問数</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number text-info">100%</div>
+                                <div class="stat-label">回答率</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number text-warning">2025-08-05</div>
+                                <div class="stat-label">回答期限</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 回答者一覧 -->
+            <div class="card mb-20">
+                <div class="card-header">
+                    <h2 class="card-title">👥 回答者一覧</h2>
+                </div>
+                <div class="card-body">
+                    <!-- 検索・フィルター -->
+                    <div class="row mb-20">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="回答者名で検索..." id="answerSearch">
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control" id="departmentFilter">
+                                <option value="">全ての部署</option>
+                                <option value="営業部">営業部</option>
+                                <option value="技術部">技術部</option>
+                                <option value="人事部">人事部</option>
+                                <option value="マーケティング部">マーケティング部</option>
+                                <option value="総務部">総務部</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>回答者名</th>
+                                <th>部署</th>
+                                <th>メールアドレス</th>
+                                <th>回答日時</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>佐藤花子</strong>
+                                    <br><small class="text-muted">ID: P001</small>
+                                </td>
+                                <td>営業部</td>
+                                <td>hanako.sato@company.com</td>
+                                <td>2025-08-03 10:30</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="viewAnswerDetail('P001', 'WS001')">回答詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>田中次郎</strong>
+                                    <br><small class="text-muted">ID: P002</small>
+                                </td>
+                                <td>技術部</td>
+                                <td>jiro.tanaka@company.com</td>
+                                <td>2025-08-03 14:15</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="viewAnswerDetail('P002', 'WS001')">回答詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>山田三郎</strong>
+                                    <br><small class="text-muted">ID: P003</small>
+                                </td>
+                                <td>人事部</td>
+                                <td>saburo.yamada@company.com</td>
+                                <td>2025-08-04 09:22</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="viewAnswerDetail('P003', 'WS001')">回答詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>鈴木美咲</strong>
+                                    <br><small class="text-muted">ID: P004</small>
+                                </td>
+                                <td>マーケティング部</td>
+                                <td>misaki.suzuki@company.com</td>
+                                <td>2025-08-04 16:45</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="viewAnswerDetail('P004', 'WS001')">回答詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>高橋一郎</strong>
+                                    <br><small class="text-muted">ID: P005</small>
+                                </td>
+                                <td>総務部</td>
+                                <td>ichiro.takahashi@company.com</td>
+                                <td>2025-08-05 11:30</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="viewAnswerDetail('P005', 'WS001')">回答詳細</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- ページネーション -->
+                    <nav aria-label="回答者一覧ページネーション" class="mt-20">
+                        <ul class="pagination justify-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">前へ</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">次へ</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2025 domyaku. All rights reserved.</p>
+        </div>
+    </div>
+
+    <style>
+        /* CSS変数定義 */
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --medium-gray: #666666;
+            --light-gray: #999999;
+            --border-color: #e0e0e0;
+            --white: #ffffff;
+            --black: #000000;
+            --lightest-gray: #f5f5f5;
+        }
+        
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb-item {
+            color: var(--medium-gray);
+        }
+        
+        .breadcrumb-item a {
+            color: var(--medium-gray);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item a:hover {
+            color: var(--black);
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--black);
+        }
+        
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "/";
+            margin: 0 8px;
+            color: var(--medium-gray);
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #666666;
+            font-size: 14px;
+        }
+        
+        .pagination {
+            margin: 0;
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .pagination .page-item {
+            margin-right: 5px;
+        }
+        
+        .pagination .page-link {
+            display: block;
+            padding: 8px 12px;
+            color: #000000;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background-color: #ffffff;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: #000000;
+            border-color: #000000;
+            color: #ffffff;
+        }
+        
+        .pagination .page-link:hover {
+            color: #000000;
+            background-color: #f5f5f5;
+            border-color: #e0e0e0;
+        }
+        
+        .pagination .page-item.disabled .page-link {
+            color: #666666;
+            background-color: #ffffff;
+            border-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+        
+        .col-md-3, .col-md-6 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        .col-md-3 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+        
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .col-md-3, .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+
+    <script>
+        // ページ読み込み時にURLパラメータからタイトルを設定
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const worksheetTitle = urlParams.get('title');
+            if (worksheetTitle) {
+                document.querySelector('.card-title').textContent = worksheetTitle + ' 回答一覧';
+                document.querySelector('.breadcrumb-item.active').textContent = worksheetTitle + '回答一覧';
+            }
+        });
+
+        // 回答詳細表示
+        function viewAnswerDetail(participantId, worksheetId) {
+            // ワークシート回答詳細ページを新しいウィンドウで開く（閲覧専用）
+            window.open(`worksheet_answer.html?participant=${participantId}&worksheet=${worksheetId}&mode=readonly`, '_blank', 'width=1200,height=800');
+        }
+
+        // 回答データエクスポート
+        function exportAnswers() {
+            alert('回答データをCSVファイルとしてダウンロードしました。');
+        }
+
+        // 検索・フィルター機能
+        document.getElementById('answerSearch').addEventListener('input', function() {
+            console.log('検索:', this.value);
+            // 実際の検索処理はここに実装
+        });
+
+        document.getElementById('departmentFilter').addEventListener('change', function() {
+            console.log('部署フィルター:', this.value);
+            // 実際のフィルター処理はここに実装
+        });
+    </script>
+</body>
+</html>

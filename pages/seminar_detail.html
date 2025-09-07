@@ -114,13 +114,7 @@
             <!-- ワークシート一覧 -->
             <div class="card mb-20">
                 <div class="card-header">
-                    <div class="d-flex justify-between align-center">
-                        <h2 class="card-title">📝 ワークシート一覧</h2>
-                        <div>
-                            <button class="btn btn-secondary btn-sm" onclick="shareAllWorksheets()">全て共有</button>
-                            <a href="worksheet_editor.html" class="btn btn-primary btn-sm">新規作成</a>
-                        </div>
-                    </div>
+                    <h2 class="card-title">📝 ワークシート回答状況</h2>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -129,7 +123,6 @@
                                 <th>ワークシート名</th>
                                 <th>質問数</th>
                                 <th>回答状況</th>
-                                <th>共有状況</th>
                                 <th>期限</th>
                                 <th>操作</th>
                             </tr>
@@ -147,11 +140,9 @@
                                     </div>
                                     <small class="text-success">完了</small>
                                 </td>
-                                <td><span class="status-badge status-shared">共有済み</span></td>
                                 <td>2025-08-05</td>
                                 <td>
-                                    <a href="worksheet_editor.html?id=WS001" class="btn btn-secondary btn-sm">編集</a>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewResponses('WS001')">回答確認</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewWorksheetAnswers('WS001', '事前アンケート')">回答確認</button>
                                 </td>
                             </tr>
                             <tr>
@@ -166,11 +157,9 @@
                                     </div>
                                     <small class="text-warning">20名回答済み</small>
                                 </td>
-                                <td><span class="status-badge status-shared">共有済み</span></td>
                                 <td>2025-08-15</td>
                                 <td>
-                                    <a href="worksheet_editor.html?id=WS002" class="btn btn-secondary btn-sm">編集</a>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewResponses('WS002')">回答確認</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewWorksheetAnswers('WS002', '理解度チェック')">回答確認</button>
                                 </td>
                             </tr>
                             <tr>
@@ -185,11 +174,9 @@
                                     </div>
                                     <small class="text-info">17名回答済み</small>
                                 </td>
-                                <td><span class="status-badge status-shared">共有済み</span></td>
                                 <td>2025-09-05</td>
                                 <td>
-                                    <a href="worksheet_editor.html?id=WS003" class="btn btn-secondary btn-sm">編集</a>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewResponses('WS003')">回答確認</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewWorksheetAnswers('WS003', '研修振り返りシート')">回答確認</button>
                                 </td>
                             </tr>
                             <tr>
@@ -204,11 +191,9 @@
                                     </div>
                                     <small class="text-muted">未開始</small>
                                 </td>
-                                <td><span class="status-badge status-draft">下書き</span></td>
                                 <td>2025-09-30</td>
                                 <td>
-                                    <a href="worksheet_editor.html?id=WS004" class="btn btn-secondary btn-sm">編集</a>
-                                    <button class="btn btn-primary btn-sm" onclick="shareWorksheet('WS004')">共有</button>
+                                    <button class="btn btn-secondary btn-sm" disabled>回答確認</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -223,7 +208,6 @@
                         <h2 class="card-title">👥 参加者一覧</h2>
                         <div>
                             <button class="btn btn-secondary btn-sm" onclick="exportParticipants()">エクスポート</button>
-                            <button class="btn btn-primary btn-sm" onclick="addParticipant()">参加者追加</button>
                         </div>
                     </div>
                 </div>
@@ -234,12 +218,12 @@
                             <input type="text" class="form-control" placeholder="参加者名で検索..." id="participantSearch">
                         </div>
                         <div class="col-md-6">
-                            <select class="form-control" id="statusFilter">
-                                <option value="">全ての状況</option>
-                                <option value="active">参加中</option>
-                                <option value="pending">回答待ち</option>
-                                <option value="completed">完了</option>
-                                <option value="overdue">期限切れ</option>
+                            <select class="form-control" id="progressFilter">
+                                <option value="">全ての進捗</option>
+                                <option value="0">0% (未開始)</option>
+                                <option value="1-50">1-50% (開始済み)</option>
+                                <option value="51-99">51-99% (進行中)</option>
+                                <option value="100">100% (完了)</option>
                             </select>
                         </div>
                     </div>
@@ -251,8 +235,6 @@
                                 <th>メール</th>
                                 <th>部署</th>
                                 <th>進捗率</th>
-                                <th>最新回答</th>
-                                <th>状況</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -266,14 +248,12 @@
                                 <td>営業部</td>
                                 <td>
                                     <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 75%;">75%</div>
+                                        <div class="progress-fill" style="width: 75%;">3/4</div>
                                     </div>
+                                    <small class="text-info">75% (3/4ワークシート提出済み)</small>
                                 </td>
-                                <td>2025-09-03 14:30</td>
-                                <td><span class="status-badge status-active">参加中</span></td>
                                 <td>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P001')">詳細</button>
-                                    <button class="btn btn-secondary btn-sm" onclick="sendReminder('P001')">催促</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewParticipantDetail('P001')">詳細</button>
                                 </td>
                             </tr>
                             <tr>
@@ -285,13 +265,12 @@
                                 <td>技術部</td>
                                 <td>
                                     <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 100%;">100%</div>
+                                        <div class="progress-fill" style="width: 100%;">4/4</div>
                                     </div>
+                                    <small class="text-success">100% (4/4ワークシート提出済み)</small>
                                 </td>
-                                <td>2025-09-04 16:15</td>
-                                <td><span class="status-badge status-completed">完了</span></td>
                                 <td>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P002')">詳細</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewParticipantDetail('P002')">詳細</button>
                                 </td>
                             </tr>
                             <tr>
@@ -303,14 +282,12 @@
                                 <td>人事部</td>
                                 <td>
                                     <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 33%;">33%</div>
+                                        <div class="progress-fill" style="width: 25%;">1/4</div>
                                     </div>
+                                    <small class="text-warning">25% (1/4ワークシート提出済み)</small>
                                 </td>
-                                <td>2025-08-30 09:45</td>
-                                <td><span class="status-badge status-overdue">期限切れ</span></td>
                                 <td>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P003')">詳細</button>
-                                    <button class="btn btn-warning btn-sm" onclick="sendReminder('P003')">催促</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewParticipantDetail('P003')">詳細</button>
                                 </td>
                             </tr>
                             <tr>
@@ -322,14 +299,29 @@
                                 <td>マーケティング部</td>
                                 <td>
                                     <div class="progress-bar small">
-                                        <div class="progress-fill" style="width: 50%;">50%</div>
+                                        <div class="progress-fill" style="width: 50%;">2/4</div>
                                     </div>
+                                    <small class="text-info">50% (2/4ワークシート提出済み)</small>
                                 </td>
-                                <td>2025-09-02 11:20</td>
-                                <td><span class="status-badge status-pending">回答待ち</span></td>
                                 <td>
-                                    <button class="btn btn-secondary btn-sm" onclick="viewProgress('P004')">詳細</button>
-                                    <button class="btn btn-secondary btn-sm" onclick="sendReminder('P004')">催促</button>
+                                    <button class="btn btn-primary btn-sm" onclick="viewParticipantDetail('P004')">詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>高橋一郎</strong>
+                                    <br><small class="text-muted">ID: P005</small>
+                                </td>
+                                <td>ichiro.takahashi@company.com</td>
+                                <td>総務部</td>
+                                <td>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 0%;">0/4</div>
+                                    </div>
+                                    <small class="text-muted">0% (0/4ワークシート提出済み)</small>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="viewParticipantDetail('P005')">詳細</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -857,9 +849,16 @@
             alert('選択されたデータをCSVファイルとしてダウンロードしました。');
         }
         
-        // 参加者追加
-        function addParticipant() {
-            window.open('user_invitation.html?seminar=SEM-2025-001', '_blank');
+        // ワークシート回答確認（seminar_work_list_answer.htmlに移動）
+        function viewWorksheetAnswers(worksheetId, worksheetTitle) {
+            // ワークシート回答者一覧ページに移動
+            window.location.href = `seminar_work_list_answer.html?worksheet=${worksheetId}&title=${encodeURIComponent(worksheetTitle)}&seminar=SEM-2025-001`;
+        }
+        
+        // 参加者詳細表示（受講者個人ページを閲覧のみで表示）
+        function viewParticipantDetail(participantId) {
+            // 受講者の個人ページを閲覧専用で表示
+            window.open(`participant_dashboard.html?id=${participantId}&mode=readonly&seminar=SEM-2025-001`, '_blank', 'width=1200,height=800');
         }
         
         // 参加者エクスポート
@@ -873,7 +872,7 @@
             console.log('検索:', this.value);
         });
         
-        document.getElementById('statusFilter').addEventListener('change', function() {
+        document.getElementById('progressFilter').addEventListener('change', function() {
             // 実際のフィルタ処理はここに実装
             console.log('フィルタ:', this.value);
         });
