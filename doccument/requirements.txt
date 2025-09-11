@@ -1,0 +1,35 @@
+# Django Core (シンプル版)
+Django==4.2.7
+psycopg2-binary==2.9.7
+django-environ==0.10.0
+
+# UI & Forms
+django-crispy-forms==2.0
+crispy-bootstrap5==0.7
+
+# Production Server
+gunicorn==21.2.0
+whitenoise==6.5.0
+
+# Development Tools
+django-debug-toolbar==4.2.0
+
+# Email (基本)
+django-anymail==10.1
+
+# Utilities
+python-decouple==3.8
+Pillow==10.0.1
+python-dateutil==2.8.2
+
+# 将来版で追加予定（コメントアウト）
+# django-encrypted-model-fields==0.6.5  # データ暗号化
+# django-audit-log==0.7.0              # 監査ログ
+# weasyprint==60.1                     # PDF生成
+# django-chartjs==2.3.0                # グラフ表示
+# plotly==5.15.0                       # インタラクティブグラフ
+# django-import-export==3.3.1          # データインポート/エクスポート
+# django-backup==1.0.1                 # バックアップ機能
+# celery[redis]==5.3.1                 # 非同期処理
+# redis==4.6.0                         # Redis
+# django-extensions==3.2.3             # Django拡張
